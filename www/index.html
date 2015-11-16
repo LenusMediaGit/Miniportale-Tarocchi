@@ -7,7 +7,7 @@
         <!-- WARNING: for iOS 7, remove the width=device-width and height=device-height attributes. See https://issues.apache.org/jira/browse/CB-4323 -->
         <!--<meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height" />-->
         <link rel="stylesheet" type="text/css" href="css/index.css" />
-        <title>Miniportale Tarocchi</title>
+        <title>Tarocchi</title>
 
         <style type="text/css">
             body, html
@@ -41,11 +41,38 @@
         </style>
     </head>
     <body>
-        <iframe src="http://www.miniportale.it/mm/t1/"></iframe>
+        <!-- we do not care about cookies since our cookie js system bypass iframe setting cookie automatically -->
+        <script type="text/javascript">              
+            function createIframe(l) {
+                var langs = ["ru","pt","it","fr","es","en","de"];
+
+                // if language is not supported, then fallback to english
+                if (langs.indexOf(l)<0) 
+                    l="en";
+
+                url="http://www.tarotfree.biz/t/"+l+"/";
+
+                ifrm = document.createElement("iframe");
+                ifrm.setAttribute("src", url);
+                document.body.appendChild(ifrm);
+            }
+            
+            var l = navigator.languages ? navigator.languages[0] : (navigator.language || navigator.userLanguage);
+            l = navigator.language.split("-");
+            l = (l[0]).toLowerCase();
+            createIframe(l);
+            
+            /* // alternative phonegap api
+               navigator.globalization.getPreferredLanguage(
+                 createIframe,
+                 function () {alert('Error getting language\n');}
+               );
+            */
+            
+        </script>
         <script type="text/javascript" src="cordova.js"></script>
         <script type="text/javascript" src="js/index.js"></script>
         <script>
             app.initialize();
         </script>
-    </body>
 </html>
